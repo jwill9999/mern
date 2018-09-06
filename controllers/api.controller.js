@@ -11,9 +11,6 @@ const Item = require('../model');
 
 exports.index = function (req, res, next) {
     Item.find()
-        .sort({
-            date: -1
-        })
         .then(items => res.status(200).json(items))
         .catch(e => res.status(500).send({
             error: 'Unable to load files from database'
