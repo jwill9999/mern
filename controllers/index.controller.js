@@ -10,5 +10,5 @@ const path = require('path');
 */
 
 exports.index = function(req,res){
-    res.sendFile('../client/public/index.html');
+    res.sendFile(path.resolve('client/build/index.html'));
 }

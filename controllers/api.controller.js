@@ -28,14 +28,19 @@ exports.index = function (req, res) {
 
 exports.post = function (req, res, next) {
     const {name} = req.body;
-    let newItem = new Item({name});
+    if(name){
+        let newItem = new Item({name});
+    
+        newItem.save()
+            .then(item => res.status(201).json(item))
+            .catch(e => res.status(500).send({
+                error: 'Unable to save file to database',
+                message: e.message
+            }))
 
-    newItem.save()
-        .then(item => res.status(201).json(item))
-        .catch(e => res.status(500).send({
-            error: 'Unable to save file to database',
-            message: e.message
-        }))
+    } else {
+        res.status(400).send({error: 'You must provide a name'})
+    }
 }
 
 /*
