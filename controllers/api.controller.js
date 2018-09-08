@@ -9,7 +9,7 @@ const Item = require('../model');
     @throws error object
 */
 
-exports.index = function (req, res, next) {
+exports.index = function (req, res) {
     Item.find()
         .then(items => res.status(200).json(items))
         .catch(e => res.status(500).send({

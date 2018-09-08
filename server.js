@@ -36,7 +36,7 @@ app.use(express.static(path.resolve('client', 'build')));
                 ROUTES
 ************************************/
 app.use('/api/v1', api);
-app.use('*', index);
+app.use('/', index);
 
 /***********************************
                 PORT
@@ -46,6 +46,12 @@ let port = process.env.PORT || 3002;
 /***********************************
                 SERVER
 ************************************/
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })
+
+app.close = function () {
+    server.close();
+  };
+
+module.exports = app;
