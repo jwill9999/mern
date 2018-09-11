@@ -9,15 +9,16 @@ const Item = require('../model');
     @throws error object
 */
 
-exports.index = function (req, res) {
-    Item.find()
-        .then(items => res.status(200).json(items))
-        .catch(e => res.status(500).send({
-            error: 'Unable to load files from database'
-
-        }));
-}
-
+exports.index = (req, res) =>  {
+   
+    Item.getAllUsers((err, users) => {
+        		if(err){
+        			res.status(500).send({error: 'Unable to get users from database' })
+        		} else {
+                    res.status(200).json(users);
+        	};
+});
+};
 /*
     @namespace /api/v1/
     @method POST
@@ -26,21 +27,19 @@ exports.index = function (req, res) {
     @throws error object
 */
 
-exports.post = function (req, res, next) {
+exports.post = (req, res, next) =>  {
     const {name} = req.body;
-    if(name){
-        let newItem = new Item({name});
-    
-        newItem.save()
-            .then(item => res.status(201).json(item))
-            .catch(e => res.status(500).send({
-                error: 'Unable to save file to database',
-                message: e.message
-            }))
 
-    } else {
-        res.status(400).send({error: 'You must provide a name'})
-    }
+    Item.addUser({name}, (err, user) => {
+        
+        if(err){
+            res.status(400).send({error : 'Please provide a new user'})
+        } else {
+            res.status(201).json(user)
+        }
+
+    })
+  
 }
 
 /*

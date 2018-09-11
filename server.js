@@ -49,12 +49,10 @@ let port = process.env.PORT || 3001;
 /***********************************
                 SERVER
 ************************************/
-const server = app.listen(port, () => {
+app.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })
 
-app.close = function () {
-    server.close();
-  };
+
 
 module.exports = app;
