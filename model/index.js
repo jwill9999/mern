@@ -13,4 +13,22 @@ const ItemSchema = new Schema({
     }
 })
 
-module.exports = Item = mongoose.model('item', ItemSchema);
+
+var Items = module.exports =  mongoose.model('Item', ItemSchema);
+    
+
+module.exports.getAllUsers = (cb) => {
+     Items.find(cb);
+              
+    }
+
+module.exports.addUser = (user,cb) => {
+ 
+    if(user){
+    let newItem = new Items(user);    
+        newItem.save(cb);  
+       
+    } else {
+        cb(true,null)
+    }
+};
